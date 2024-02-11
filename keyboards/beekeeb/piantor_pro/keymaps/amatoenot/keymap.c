@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 
 #include QMK_KEYBOARD_H
-// #include "features/achordion.h"
+#include "features/achordion.h"
 
 #define CTL_X LCTL_T(KC_X)
 #define ALT_C LALT_T(KC_C)
@@ -97,39 +97,52 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
-// bool process_record_user(uint16_t keycode, keyrecord_t* record) {
-//     // if (!process_achordion(keycode, record)) {
-//     //     return false; 
-//     // }
+bool process_record_user(uint16_t keycode, keyrecord_t* record) {
+    if (!process_achordion(keycode, record)) {
+        return false; 
+    }
 
-//     return true;
-// }
+    return true;
+}
 
-// void matrix_scan_user(void) {
-//     achordion_task();
-// }
+void matrix_scan_user(void) {
+    achordion_task();
+}
 
-// bool achordion_chord(uint16_t tap_hold_keycode, keyrecord_t* tap_hold_record,
-//                      uint16_t other_keycode, keyrecord_t* other_record) {
-//     // allow thubm keys hold for the same side on the left 
-//     if (tap_hold_record->event.key.row == 3) {
-//         return true;
-//     }
+bool achordion_chord(uint16_t tap_hold_keycode, keyrecord_t* tap_hold_record,
+                     uint16_t other_keycode, keyrecord_t* other_record) {
+    // allow thubm keys hold for the same side on the left 
+    if (tap_hold_record->event.key.row == 3) {
+        return true;
+    }
     
-//     // allow tapping thumb keys on hold on the same side (left)
-//     // if (other_record->event.key.row == 3) {
-//     //     return true;
-//     // }                                           
+    // allow tapping thumb keys on hold on the same side (left)
+    // if (other_record->event.key.row == 3) {
+    //     return true;
+    // }                                           
 
-//     // allow thumb keys hold for the same side on the right
-//     if (tap_hold_record->event.key.row == 7) {
-//         return true;
-//     }
-//     // allow tapping thumb keys on hold on the same side (right)
-//     // if (other_record->event.key.row == 7) {
-//     //     return true;
-//     // }
+    // allow thumb keys hold for the same side on the right
+    if (tap_hold_record->event.key.row == 7) {
+        return true;
+    }
+    // allow tapping thumb keys on hold on the same side (right)
+    // if (other_record->event.key.row == 7) {
+    //     return true;
+    // }
 
-//     // Otherwise, follow the opposite hands rule.
-//     return achordion_opposite_hands(tap_hold_record, other_record);
-// }
+    // Otherwise, follow the opposite hands rule.
+    return achordion_opposite_hands(tap_hold_record, other_record);
+}
+
+bool achordion_eager_mod(uint8_t mod) {
+  switch (mod) {
+    // case MOD_LSFT:
+    // case MOD_RSFT:
+    // case MOD_LCTL:
+    // case MOD_RCTL:
+    //   return true;  // Eagerly apply Shift and Ctrl mods.
+
+    default:
+      return false;
+  }
+}
