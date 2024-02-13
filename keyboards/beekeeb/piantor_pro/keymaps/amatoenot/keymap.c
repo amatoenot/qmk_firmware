@@ -56,7 +56,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       XXXXXXX, XXXXXXX, KC_LCTL, KC_LALT, KC_LGUI, XXXXXXX,                      XXXXXXX, KC_RGUI, KC_RALT, KC_RCTL, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          XXXXXXX, _______, XXXXXXX,    _______, L3_BSPC, _______
+                                          XXXXXXX, _______, XXXXXXX,    _______, _______, _______
                                       //`--------------------------'  `--------------------------'
     ),
 
@@ -66,9 +66,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
        KC_GRV,  S_SLSH,  S_MINS, KC_MINS,   S_EQL,  S_QUOT,                       S_BSLS, KC_LBRC, KC_RBRC,  S_LBRC,  S_RBRC, KC_QUOT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      XXXXXXX, XXXXXXX, KC_BSLS,  S_SCLN, KC_SLSH, XXXXXXX,                      XXXXXXX,  KC_EQL,  S_COMM,   S_DOT, XXXXXXX, XXXXXXX,
+      XXXXXXX, XXXXXXX, KC_BSLS,  S_SCLN, KC_SLSH, KC_QUOT,                      XXXXXXX,  KC_EQL,  S_COMM,   S_DOT, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                           _______, L3_SPC, _______,    XXXXXXX, _______, XXXXXXX
+                                          _______, _______, _______,    XXXXXXX, _______, XXXXXXX
                                       //`--------------------------'  `--------------------------'
     ),
 
@@ -101,7 +101,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     if (!process_achordion(keycode, record)) {
         return false; 
     }
-
+    
     return true;
 }
 
@@ -111,38 +111,34 @@ void matrix_scan_user(void) {
 
 bool achordion_chord(uint16_t tap_hold_keycode, keyrecord_t* tap_hold_record,
                      uint16_t other_keycode, keyrecord_t* other_record) {
-    // allow thubm keys hold for the same side on the left 
+    // allow thumb keys hold for the same side on the left 
     if (tap_hold_record->event.key.row == 3) {
         return true;
-    }
-    
-    // allow tapping thumb keys on hold on the same side (left)
-    // if (other_record->event.key.row == 3) {
-    //     return true;
-    // }                                           
+    }                                         
 
     // allow thumb keys hold for the same side on the right
     if (tap_hold_record->event.key.row == 7) {
         return true;
     }
-    // allow tapping thumb keys on hold on the same side (right)
-    // if (other_record->event.key.row == 7) {
-    //     return true;
-    // }
 
     // Otherwise, follow the opposite hands rule.
     return achordion_opposite_hands(tap_hold_record, other_record);
 }
 
 bool achordion_eager_mod(uint8_t mod) {
-  switch (mod) {
-    // case MOD_LSFT:
-    // case MOD_RSFT:
-    // case MOD_LCTL:
-    // case MOD_RCTL:
-    //   return true;  // Eagerly apply Shift and Ctrl mods.
+    return false;
+    // switch (mod) {
+    //     case MOD_LSFT:
+    //     case MOD_RSFT:
+    //     case MOD_LCTL:
+    //     case MOD_RCTL:
+    //     return true;  // Eagerly apply Shift and Ctrl mods.
 
-    default:
-      return false;
-  }
+    //     default:
+    //     return false;
+    // }
+}
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+  return update_tri_layer_state(state, 1, 2, 3);
 }
