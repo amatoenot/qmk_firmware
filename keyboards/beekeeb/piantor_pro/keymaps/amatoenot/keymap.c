@@ -4,19 +4,26 @@
 #include QMK_KEYBOARD_H
 #include "features/achordion.h"
 
+// #define SFT_A LSFT_T(KC_A)
 #define CTL_X LCTL_T(KC_X)
 #define ALT_C LALT_T(KC_C)
 #define GUI_V LGUI_T(KC_V)
 #define GUI_M RGUI_T(KC_M)
 #define ALT_COM RALT_T(KC_COMM)
 #define CTL_DOT RCTL_T(KC_DOT)
+// #define SFT_SCL RSFT_T(KC_SCLN)
+
 #define L1_SPC LT(1,KC_SPC)
+#define L2_BSPC LT(2,KC_BSPC)
+#define L2_SPC LT(2,KC_SPC)
+
 #define SFT_TAB LSFT_T(KC_TAB)
 #define SFT_ENT RSFT_T(KC_ENT)
-#define L2_BSPC LT(2,KC_BSPC)
+// #define SFT_SPC LSFT_T(KC_SPC)
+// #define SFT_BSP RSFT_T(KC_BSPC)
 
-#define LSCG_L LSG(C(KC_L))
-#define L3_BSPC LT(3,KC_BSPC)
+// #define LSCG_L LSG(C(KC_L))
+// #define L3_BSPC LT(3,KC_BSPC)
 
 #define S_GRV S(KC_GRV)
 #define S_SLSH S(KC_SLSH)
@@ -35,31 +42,41 @@
 #define ALT_VD RALT_T(KC_VOLD)
 #define CTL_VU RCTL_T(KC_VOLU)
 
+
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+    // alpha keys
+    // low row mods
+    // all keys are available
     [0] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-       KC_ESC,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,    KC_P, KC_LBRC,
+      KC_RBRC,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,    KC_P, KC_LBRC,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_CAPS,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                         KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, KC_QUOT,
+       KC_GRV,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                         KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, KC_QUOT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      XXXXXXX,    KC_Z,   CTL_X,   ALT_C,   GUI_V,    KC_B,                         KC_N,   GUI_M, ALT_COM, CTL_DOT, KC_SLSH, XXXXXXX,
+      XXXXXXX,    KC_Z,   CTL_X,   ALT_C,   GUI_V,    KC_B,                         KC_N,   GUI_M, ALT_COM, CTL_DOT, KC_SLSH, KC_BSLS,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_LGUI,  L1_SPC, SFT_TAB,    SFT_ENT, L2_BSPC,  KC_DEL
+                                          KC_LGUI,  L1_SPC, SFT_TAB,    SFT_ENT,  L2_SPC, KC_CAPS
                                       //`--------------------------'  `--------------------------'
     ),
 
+    // numbers
+    // instant mods on the left side
+    // navigation on the right side
     [1] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      XXXXXXX,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                         KC_6,    KC_7,    KC_8,    KC_9,    KC_0, XXXXXXX,
+       KC_ESC,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                         KC_6,    KC_7,    KC_8,    KC_9,    KC_0, KC_BSPC,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-       LSCG_L, KC_LSFT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, KC_RSFT, XXXXXXX,
+      XXXXXXX, KC_LSFT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, KC_RSFT, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       XXXXXXX, XXXXXXX, KC_LCTL, KC_LALT, KC_LGUI, XXXXXXX,                      XXXXXXX, KC_RGUI, KC_RALT, KC_RCTL, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          XXXXXXX, _______, XXXXXXX,    _______, _______, _______
+                                          _______, _______, _______,    _______, _______, _______
                                       //`--------------------------'  `--------------------------'
     ),
 
+    // symbols
+    // partentheses, brackets and braces on the right side
     [2] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
         S_GRV, S(KC_1), S(KC_2), S(KC_3), S(KC_4), S(KC_5),                      S(KC_6), S(KC_7), S(KC_8), S(KC_9), S(KC_0), XXXXXXX,
@@ -68,22 +85,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       XXXXXXX, XXXXXXX, KC_BSLS,  S_SCLN, KC_SLSH, KC_QUOT,                      XXXXXXX,  KC_EQL,  S_COMM,   S_DOT, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          _______, _______, _______,    XXXXXXX, _______, XXXXXXX
+                                          _______, _______, _______,    _______, _______, _______
                                       //`--------------------------'  `--------------------------'
     ),
 
+    // F keys
+    // media and system keys
     [3] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      XXXXXXX,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                        KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10,  KC_F11,
+       KC_ESC,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                        KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10,  KC_F11,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      XXXXXXX, KC_LSFT, KC_BRID, XXXXXXX, KC_BRIU, XXXXXXX,                      XXXXXXX, KC_MRWD, KC_MPLY, KC_MFFD, KC_RSFT,  KC_F12,
+      KC_CAPS, KC_LSFT, KC_BRID, XXXXXXX, KC_BRIU, XXXXXXX,                      XXXXXXX, KC_MRWD, KC_MPLY, KC_MFFD, KC_RSFT,  KC_F12,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       XXXXXXX, XXXXXXX, KC_LCTL, KC_LALT, KC_LGUI, XXXXXXX,                      XXXXXXX,  GUI_MT,  ALT_VD,  CTL_VU, XXXXXXX, QK_BOOT,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          XXXXXXX, _______, XXXXXXX,    XXXXXXX, _______, XXXXXXX
+                                          _______, _______, _______,    _______, _______, _______
                                       //`--------------------------'  `--------------------------'
     )
 };
+
+
 
 bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
@@ -111,6 +132,7 @@ void matrix_scan_user(void) {
 
 bool achordion_chord(uint16_t tap_hold_keycode, keyrecord_t* tap_hold_record,
                      uint16_t other_keycode, keyrecord_t* other_record) {
+    
     // allow thumb keys hold for the same side on the left 
     if (tap_hold_record->event.key.row == 3) {
         return true;
@@ -127,18 +149,15 @@ bool achordion_chord(uint16_t tap_hold_keycode, keyrecord_t* tap_hold_record,
 
 bool achordion_eager_mod(uint8_t mod) {
     return false;
-    // switch (mod) {
-    //     case MOD_LSFT:
-    //     case MOD_RSFT:
-    //     case MOD_LCTL:
-    //     case MOD_RCTL:
-    //     return true;  // Eagerly apply Shift and Ctrl mods.
-
-    //     default:
-    //     return false;
-    // }
 }
 
 layer_state_t layer_state_set_user(layer_state_t state) {
   return update_tri_layer_state(state, 1, 2, 3);
 }
+
+const uint16_t PROGMEM meh_combo[] = {SFT_TAB, SFT_ENT, COMBO_END};
+// const uint16_t PROGMEM test_combo2[] = {KC_C, KC_D, COMBO_END};
+combo_t key_combos[] = {
+    COMBO(meh_combo, KC_MEH),
+    // COMBO(test_combo2, LCTL(KC_Z)), // keycodes with modifiers are possible too!
+};
