@@ -37,9 +37,14 @@
 #define S_COMM S(KC_COMM)
 #define S_DOT S(KC_DOT)
 #define L3_SPC LT(3,KC_SPC)
+#define GUI_EQL RGUI_T(KC_EQL)
+#define GUI_SLS LGUI_T(KC_SLSH)
 
-#define GUI_MT RGUI_T(KC_MUTE)
-#define ALT_VD RALT_T(KC_VOLD)
+// #define GUI_MT RGUI_T(KC_MUTE) 
+// #define ALT_VD RALT_T(KC_VOLD) 
+
+#define GUI_VD RGUI_T(KC_VOLD)
+#define ALT_MT RALT_T(KC_MUTE)
 #define CTL_VU RCTL_T(KC_VOLU)
 
 
@@ -67,9 +72,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
        KC_ESC,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                         KC_6,    KC_7,    KC_8,    KC_9,    KC_0, KC_BSPC,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      XXXXXXX, KC_LSFT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, KC_RSFT, XXXXXXX,
+      XXXXXXX, KC_LSFT, KC_BTN3, KC_BTN2, KC_BTN1, XXXXXXX,                      KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, KC_RSFT, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      XXXXXXX, XXXXXXX, KC_LCTL, KC_LALT, KC_LGUI, XXXXXXX,                      XXXXXXX, KC_RGUI, KC_RALT, KC_RCTL, XXXXXXX, XXXXXXX,
+      XXXXXXX, XXXXXXX, KC_LCTL, KC_LALT, KC_LGUI, XXXXXXX,                      XXXXXXX, KC_RGUI, ALT_COM, CTL_DOT, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           _______, _______, _______,    _______, _______, _______
                                       //`--------------------------'  `--------------------------'
@@ -83,7 +88,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
        KC_GRV,  S_SLSH,  S_MINS, KC_MINS,   S_EQL,  S_QUOT,                       S_BSLS, KC_LBRC, KC_RBRC,  S_LBRC,  S_RBRC, KC_QUOT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      XXXXXXX, XXXXXXX, KC_BSLS,  S_SCLN, KC_SLSH, KC_QUOT,                      XXXXXXX,  KC_EQL,  S_COMM,   S_DOT, XXXXXXX, XXXXXXX,
+      XXXXXXX, XXXXXXX, KC_BSLS,  S_SCLN, GUI_SLS, KC_QUOT,                      XXXXXXX, GUI_EQL,  S_COMM,   S_DOT, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           _______, _______, _______,    _______, _______, _______
                                       //`--------------------------'  `--------------------------'
@@ -97,7 +102,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_CAPS, KC_LSFT, KC_BRID, XXXXXXX, KC_BRIU, XXXXXXX,                      XXXXXXX, KC_MRWD, KC_MPLY, KC_MFFD, KC_RSFT,  KC_F12,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      XXXXXXX, XXXXXXX, KC_LCTL, KC_LALT, KC_LGUI, XXXXXXX,                      XXXXXXX,  GUI_MT,  ALT_VD,  CTL_VU, XXXXXXX, QK_BOOT,
+      XXXXXXX, XXXXXXX, KC_LCTL, KC_LALT, KC_LGUI, XXXXXXX,                      XXXXXXX,  GUI_VD,  ALT_MT,  CTL_VU, XXXXXXX, QK_BOOT,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           _______, _______, _______,    _______, _______, _______
                                       //`--------------------------'  `--------------------------'
@@ -105,6 +110,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 
+
+// bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
+//     switch (keycode) {
+//         case L2_SPC:
+//         case L1_SPC:
+//             // Immediately select the hold action when another key is tapped.
+//             return true;
+//         default:
+//             // Do not select the hold action when another key is tapped.
+//             return false;
+//     }
+// }
 
 bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
